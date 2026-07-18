@@ -27,3 +27,8 @@ app.use("/api/auth", authRoutes);
 app.use(errorHandler);
 
 export default app;
+
+
+// i think all work for backend is done, now we can move to frontend part tomorrow morning at 8:22 am .
+// i have tested all apis using postman and all are working fine, i have also tested the error handling and it is also working fine. so we can move to frontend part now.
+// so will meet tomorrow morning at 8:22 am for frontend part bbye. 
