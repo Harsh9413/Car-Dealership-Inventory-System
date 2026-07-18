@@ -2,7 +2,7 @@ import request from "supertest";
 import app from "../../app";
 
 describe("POST /api/auth/register", () => {
-  it("should return 404 because route does not exist yet", async () => {
+  it("should register a user successfully", async () => {
     const response = await request(app)
       .post("/api/auth/register")
       .send({
@@ -12,5 +12,10 @@ describe("POST /api/auth/register", () => {
       });
 
     expect(response.status).toBe(201);
+
+    expect(response.body).toEqual({
+      success: true,
+      message: "User registered successfully",
+    });
   });
 });
