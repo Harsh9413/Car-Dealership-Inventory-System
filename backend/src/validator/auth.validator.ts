@@ -33,3 +33,17 @@ export const registerValidator = [
     .isIn(["admin", "user"])
     .withMessage("Role must be either admin or user"),
 ];
+
+export const loginValidator = [
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is required")
+    .isEmail()
+    .withMessage("Invalid email address")
+    .normalizeEmail(),
+
+  body("password")
+    .notEmpty()
+    .withMessage("Password is required"),
+];
