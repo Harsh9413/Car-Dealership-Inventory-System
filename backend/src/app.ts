@@ -2,7 +2,7 @@ import express from "express";
 import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
-
+import vehicleRoutes from "./routes/vehicle.routes";
 import authRoutes from "./routes/auth.routes";
 import { errorHandler } from "./middleware/error.middleware";
 
@@ -20,6 +20,7 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
+app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/auth", authRoutes);
 
 // Global Error Handler (always last)
