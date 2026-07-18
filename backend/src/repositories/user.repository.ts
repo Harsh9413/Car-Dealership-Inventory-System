@@ -1,16 +1,17 @@
 import User, { IUser } from "../models/user.model";
+import { RegisterUserDto } from "../types/auth.types";
 
-export class UserRepository {
-  async create(userData: Partial<IUser>): Promise<IUser> {
+class UserRepository {
+  async create(userData: RegisterUserDto & { password: string }): Promise<IUser> {
     return await User.create(userData);
   }
 
   async findByEmail(email: string): Promise<IUser | null> {
-    return await User.findOne({ email });
+    return User.findOne({ email });
   }
 
   async findById(id: string): Promise<IUser | null> {
-    return await User.findById(id);
+    return User.findById(id);
   }
 }
 

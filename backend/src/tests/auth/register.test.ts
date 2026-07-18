@@ -13,9 +13,12 @@ describe("POST /api/auth/register", () => {
 
     expect(response.status).toBe(201);
 
-    expect(response.body).toEqual({
-      success: true,
-      message: "User registered successfully",
-    });
+    expect(response.body.success).toBe(true);
+    expect(response.body.message).toBe("User registered successfully");
+
+    expect(response.body.data).toHaveProperty("id");
+    expect(response.body.data.name).toBe("Harsh");
+    expect(response.body.data.email).toBe("harsh@example.com");
+    expect(response.body.data.role).toBe("user");
   });
 });
