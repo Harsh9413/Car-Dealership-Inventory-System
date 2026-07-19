@@ -1,4 +1,5 @@
 import type { Vehicle } from "../../types/vehicle.types";
+import "./VehicleTable.css";
 
 interface VehicleTableProps {
   vehicles: Vehicle[];
@@ -21,7 +22,7 @@ function VehicleTable({
 }: VehicleTableProps) {
   if (loading) {
     return (
-      <div className="py-10 text-center text-gray-500">
+      <div className="table-loading">
         Loading vehicles...
       </div>
     );
@@ -29,72 +30,70 @@ function VehicleTable({
 
   if (vehicles.length === 0) {
     return (
-      <div className="rounded-lg bg-white py-10 text-center shadow">
-        <p className="text-lg text-gray-500">
-          No vehicles found.
-        </p>
+      <div className="table-empty">
+        <h3>No vehicles found</h3>
+        <p>Add your first vehicle to get started.</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg bg-white shadow">
-      <table className="min-w-full">
-        <thead className="bg-slate-100">
+    <div className="vehicle-table-wrapper">
+      <table className="vehicle-table">
+        <thead>
           <tr>
-            <th className="px-4 py-3 text-left">Make</th>
-            <th className="px-4 py-3 text-left">Model</th>
-            <th className="px-4 py-3 text-left">Category</th>
-            <th className="px-4 py-3 text-right">Price</th>
-            <th className="px-4 py-3 text-center">Stock</th>
-            <th className="px-4 py-3 text-center">Actions</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Category</th>
+            <th className="text-right">Price</th>
+            <th className="text-center">Stock</th>
+            <th className="text-center">Actions</th>
           </tr>
         </thead>
 
         <tbody>
           {vehicles.map((vehicle) => (
-            <tr
-              key={vehicle._id}
-              className="border-t transition-colors hover:bg-slate-50"
-            >
-              <td className="px-4 py-3">{vehicle.make}</td>
+            <tr key={vehicle._id}>
+              <td>{vehicle.make}</td>
 
-              <td className="px-4 py-3">{vehicle.model}</td>
+              <td>{vehicle.model}</td>
 
-              <td className="px-4 py-3">
-                {vehicle.category}
+              <td>
+                <span className="category-badge">
+                  {vehicle.category}
+                </span>
               </td>
 
-              <td className="px-4 py-3 text-right font-medium">
+              <td className="price-cell">
                 ₹{vehicle.price.toLocaleString("en-IN")}
               </td>
 
-              <td className="px-4 py-3 text-center">
+              <td className="stock-cell">
                 <span
-                  className={`rounded-full px-3 py-1 text-sm font-medium ${
+                  className={`stock-badge ${
                     vehicle.quantity > 10
-                      ? "bg-green-100 text-green-700"
+                      ? "stock-high"
                       : vehicle.quantity > 0
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-red-100 text-red-700"
+                      ? "stock-medium"
+                      : "stock-low"
                   }`}
                 >
                   {vehicle.quantity}
                 </span>
               </td>
 
-              <td className="px-4 py-3">
-                <div className="flex flex-wrap justify-center gap-2">
+              <td>
+                <div className="action-buttons">
                   <button
                     onClick={() => onPurchase(vehicle)}
-                    className="rounded bg-indigo-500 px-3 py-1 text-sm text-white transition hover:bg-indigo-600"
+                    className="purchase-btn"
                   >
                     Purchase
                   </button>
 
                   <button
                     onClick={() => onEdit(vehicle)}
-                    className="rounded bg-blue-500 px-3 py-1 text-sm text-white transition hover:bg-blue-600"
+                    className="edit-btn"
                   >
                     Edit
                   </button>
@@ -103,14 +102,14 @@ function VehicleTable({
                     <>
                       <button
                         onClick={() => onRestock(vehicle)}
-                        className="rounded bg-green-500 px-3 py-1 text-sm text-white transition hover:bg-green-600"
+                        className="restock-btn"
                       >
                         Restock
                       </button>
 
                       <button
                         onClick={() => onDelete(vehicle)}
-                        className="rounded bg-red-500 px-3 py-1 text-sm text-white transition hover:bg-red-600"
+                        className="delete-btn"
                       >
                         Delete
                       </button>
