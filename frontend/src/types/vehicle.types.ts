@@ -8,3 +8,10 @@ export interface Vehicle {
   createdAt: string;
   updatedAt: string;
 }
+
+export type VehiclePayload = Pick<
+  Vehicle,
+  "make" | "model" | "category" | "price" | "quantity"
+>;
+
+export type UpdateVehiclePayload = Partial<VehiclePayload>;

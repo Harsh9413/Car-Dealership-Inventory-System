@@ -1,5 +1,8 @@
 import api from "./axios";
-import type { VehiclePayload } from "../hooks/useVehicles";
+import type {
+  VehiclePayload,
+  UpdateVehiclePayload,
+} from "../types/vehicle.types";
 
 export const getVehicles = async () => {
   const response = await api.get("/vehicles");
@@ -13,7 +16,7 @@ export const createVehicle = async (data: VehiclePayload) => {
 
 export const updateVehicle = async (
   id: string,
-  data: Partial<VehiclePayload>
+  data: UpdateVehiclePayload
 ) => {
   const response = await api.put(`/vehicles/${id}`, data);
   return response.data;

@@ -9,15 +9,11 @@ import {
   deleteVehicle,
 } from "../api/vehicle.api";
 
-import type { Vehicle } from "../types/vehicle.types";
-
-export interface VehiclePayload {
-  make: string;
-  model: string;
-  category: string;
-  price: number;
-  quantity: number;
-}
+import type {
+  Vehicle,
+  VehiclePayload,
+  UpdateVehiclePayload,
+} from "../types/vehicle.types";
 
 export function useVehicles() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -59,10 +55,10 @@ export function useVehicles() {
     }
   };
 
-  const editVehicle = async (
-    id: string,
-    payload: Partial<VehiclePayload>
-  ) => {
+ const editVehicle = async (
+  id: string,
+  payload: UpdateVehiclePayload
+) => {
     try {
       const response = await updateVehicle(id, payload);
 
