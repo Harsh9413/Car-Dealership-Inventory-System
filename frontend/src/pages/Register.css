@@ -1,0 +1,254 @@
+/* ==========================================
+   REGISTER PAGE
+========================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.register-page {
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  background:
+    radial-gradient(circle at top left, #4f46e5 0%, transparent 35%),
+    radial-gradient(circle at bottom right, #22c55e 0%, transparent 30%),
+    linear-gradient(135deg, #eef4ff 0%, #dbeafe 45%, #f8fafc 100%);
+}
+
+/* ==========================================
+   CARD
+========================================== */
+
+.register-card {
+  width: 100%;
+  max-width: 460px;
+
+  background: rgba(255,255,255,.88);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-radius: 22px;
+
+  padding: 32px;
+
+  box-shadow:
+      0 20px 60px rgba(0,0,0,.12),
+      0 8px 25px rgba(59,130,246,.08);
+
+  border: 1px solid rgba(255,255,255,.6);
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.register-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+
+  color: #1e293b;
+
+  margin-bottom: 6px;
+}
+
+.register-subtitle {
+  text-align: center;
+  color: #64748b;
+  font-size: .95rem;
+  margin-bottom: 24px;
+}
+
+/* ==========================================
+   FORM
+========================================== */
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ==========================================
+   INPUT GROUP
+========================================== */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: .92rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #334155;
+}
+
+.form-group input {
+  width: 100%;
+
+  height: 48px;
+
+  padding: 0 16px;
+
+  border-radius: 12px;
+  border: 1.5px solid #dbe4ef;
+
+  background: #fff;
+
+  font-size: .95rem;
+
+  transition: .25s ease;
+}
+
+.form-group input::placeholder {
+  color: #94a3b8;
+}
+
+.form-group input:focus {
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow:
+      0 0 0 4px rgba(37,99,235,.12);
+}
+
+/* ==========================================
+   ERRORS
+========================================== */
+
+.error-text {
+  color: #ef4444;
+  font-size: .8rem;
+  margin-top: 6px;
+}
+/* ==========================================
+   BUTTON
+========================================== */
+
+.register-btn {
+  height: 50px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+  );
+
+  color: white;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: .25s ease;
+
+  margin-top: 4px;
+}
+
+.register-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+      0 14px 30px rgba(37,99,235,.30);
+}
+
+.register-btn:active {
+  transform: scale(.98);
+}
+
+.register-btn:disabled {
+  cursor: not-allowed;
+  opacity: .65;
+}
+
+/* ==========================================
+   LOGIN LINK
+========================================== */
+
+.register-footer {
+  margin-top: 22px;
+  text-align: center;
+  font-size: .92rem;
+  color: #64748b;
+}
+
+.register-footer a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+
+  .register-card {
+    padding: 28px 24px;
+    max-width: 420px;
+  }
+
+  .register-title {
+    font-size: 1.8rem;
+  }
+
+  .form-group input {
+    height: 46px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .register-page {
+    padding: 14px;
+  }
+
+  .register-card {
+    padding: 24px 20px;
+    border-radius: 18px;
+  }
+
+  .register-title {
+    font-size: 1.65rem;
+  }
+
+  .register-subtitle {
+    font-size: .88rem;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    gap: 2px;
+  }
+
+  .register-form {
+    gap: 16px;
+  }
+
+  .register-btn {
+    height: 48px;
+  }
+}

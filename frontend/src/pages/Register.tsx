@@ -8,6 +8,8 @@ import { register as registerUser } from "../api/auth.api";
 import { registerSchema } from "../utils/registerSchema";
 import type { RegisterFormData } from "../utils/registerSchema";
 
+import "./Register.css";
+
 function Register() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -43,67 +45,82 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100">
-      <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
-        <h1 className="mb-6 text-center text-3xl font-bold">
-          Create Account
-        </h1>
+    <div className="register-page">
+      <div className="register-card">
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          <div>
-            <label className="mb-2 block font-medium">Name</label>
+        <h1 className="register-title">Create Account</h1>
+
+        <p className="register-subtitle">
+          Join us and start managing your vehicles.
+        </p>
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="register-form"
+        >
+          {/* Name */}
+          <div className="form-group">
+            <label>Name</label>
+
             <input
+              type="text"
               {...register("name")}
-              className="w-full rounded border p-3"
               placeholder="Enter your name"
             />
+
             {errors.name && (
-              <p className="mt-1 text-sm text-red-500">
+              <p className="error-text">
                 {errors.name.message}
               </p>
             )}
           </div>
 
-          <div>
-            <label className="mb-2 block font-medium">Email</label>
+          {/* Email */}
+          <div className="form-group">
+            <label>Email</label>
+
             <input
               type="email"
               {...register("email")}
-              className="w-full rounded border p-3"
               placeholder="Enter your email"
             />
+
             {errors.email && (
-              <p className="mt-1 text-sm text-red-500">
+              <p className="error-text">
                 {errors.email.message}
               </p>
             )}
           </div>
 
-          <div>
-            <label className="mb-2 block font-medium">Password</label>
+          {/* Password */}
+          <div className="form-group">
+            <label>Password</label>
+
             <input
               type="password"
               {...register("password")}
-              className="w-full rounded border p-3"
               placeholder="Enter your password"
             />
+
             {errors.password && (
-              <p className="mt-1 text-sm text-red-500">
+              <p className="error-text">
                 {errors.password.message}
               </p>
             )}
           </div>
 
-          <div>
-            <label className="mb-2 block font-medium">Confirm Password</label>
+          {/* Confirm Password */}
+          <div className="form-group">
+            <label>Confirm Password</label>
+
             <input
               type="password"
               {...register("confirmPassword")}
-              className="w-full rounded border p-3"
               placeholder="Confirm your password"
             />
+
             {errors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-500">
+              <p className="error-text">
                 {errors.confirmPassword.message}
               </p>
             )}
@@ -112,21 +129,19 @@ function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded bg-green-600 p-3 font-semibold text-white hover:bg-green-700 disabled:opacity-60"
+            className="register-btn"
           >
-            {loading ? "Creating Account..." : "Register"}
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 
-        <p className="mt-6 text-center">
+        <p className="register-footer">
           Already have an account?{" "}
-          <Link
-            to="/login"
-            className="font-semibold text-blue-600 hover:underline"
-          >
+          <Link to="/login">
             Login
           </Link>
         </p>
+
       </div>
     </div>
   );
