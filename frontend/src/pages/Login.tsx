@@ -11,8 +11,6 @@ import {
   FiEyeOff,
   FiCheckCircle,
   FiTruck,
-  FiSearch,
-  FiShield,
 } from "react-icons/fi";
 
 import { login } from "../api/auth.api";
