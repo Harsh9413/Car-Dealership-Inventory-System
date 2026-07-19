@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./RestockModal.css";
 
 interface RestockModalProps {
   open: boolean;
@@ -32,30 +33,42 @@ function RestockModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="w-full max-w-md rounded-lg bg-white p-6">
-        <h2 className="mb-4 text-xl font-bold">
+    <div className="restock-overlay">
+      <div className="restock-modal">
+        <div className="restock-icon">
+          📦
+        </div>
+
+        <h2 className="restock-title">
           Restock Vehicle
         </h2>
 
-        <p className="mb-4">
-          <strong>{vehicleName}</strong>
+        <p className="restock-subtitle">
+          Add stock for
         </p>
 
-        <input
-          type="number"
-          min={1}
-          value={quantity}
-          onChange={(e) =>
-            setQuantity(Number(e.target.value))
-          }
-          className="mb-6 w-full rounded border p-3"
-        />
+        <div className="restock-vehicle">
+          {vehicleName}
+        </div>
 
-        <div className="flex justify-end gap-3">
+        <div className="restock-field">
+          <label>Quantity</label>
+
+          <input
+            type="number"
+            min={1}
+            value={quantity}
+            onChange={(e) =>
+              setQuantity(Number(e.target.value))
+            }
+            className="restock-input"
+          />
+        </div>
+
+        <div className="restock-actions">
           <button
             onClick={onClose}
-            className="rounded bg-gray-300 px-4 py-2"
+            className="restock-cancel"
           >
             Cancel
           </button>
@@ -63,7 +76,7 @@ function RestockModal({
           <button
             disabled={loading}
             onClick={handleRestock}
-            className="rounded bg-green-600 px-4 py-2 text-white"
+            className="restock-confirm"
           >
             {loading
               ? "Restocking..."

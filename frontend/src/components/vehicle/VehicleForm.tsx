@@ -5,13 +5,12 @@ import type { Vehicle } from "../../types/vehicle.types";
 import type { VehiclePayload } from "../../types/vehicle.types";
 import { vehicleSchema } from "../../utils/vehicleSchema";
 import type { VehicleFormData } from "../../utils/vehicleSchema";
+import "./VehicleForm.css";
 
 interface VehicleFormProps {
   mode: "create" | "edit";
   vehicle?: Vehicle | null;
-
   onSubmit: (data: VehiclePayload) => Promise<boolean>;
-
   onClose: () => void;
 }
 
@@ -27,13 +26,9 @@ function VehicleForm({
     register,
     handleSubmit,
     reset,
-
-    formState: {
-      errors,
-    },
+    formState: { errors },
   } = useForm<VehicleFormData>({
     resolver: zodResolver(vehicleSchema),
-
     defaultValues: {
       make: "",
       model: "",
@@ -73,7 +68,6 @@ function VehicleForm({
 
       if (success) {
         reset();
-
         onClose();
       }
     } finally {
@@ -84,117 +78,100 @@ function VehicleForm({
   return (
     <form
       onSubmit={handleSubmit(submitForm)}
-      className="space-y-5"
+      className="vehicle-form"
     >
-      {/* Make */}
-
-      <div>
-        <label className="mb-2 block font-medium">
-          Make
-        </label>
+      <div className="form-group">
+        <label>Make</label>
 
         <input
           {...register("make")}
-          className="w-full rounded border p-3"
+          className="form-input"
           placeholder="Toyota"
         />
 
         {errors.make && (
-          <p className="mt-1 text-sm text-red-500">
+          <p className="form-error">
             {errors.make.message}
           </p>
         )}
       </div>
 
-      {/* Model */}
-
-      <div>
-        <label className="mb-2 block font-medium">
-          Model
-        </label>
+      <div className="form-group">
+        <label>Model</label>
 
         <input
           {...register("model")}
-          className="w-full rounded border p-3"
+          className="form-input"
           placeholder="Fortuner"
         />
 
         {errors.model && (
-          <p className="mt-1 text-sm text-red-500">
+          <p className="form-error">
             {errors.model.message}
           </p>
         )}
       </div>
 
-      {/* Category */}
-
-      <div>
-        <label className="mb-2 block font-medium">
-          Category
-        </label>
+      <div className="form-group">
+        <label>Category</label>
 
         <input
           {...register("category")}
-          className="w-full rounded border p-3"
+          className="form-input"
           placeholder="SUV"
         />
 
         {errors.category && (
-          <p className="mt-1 text-sm text-red-500">
+          <p className="form-error">
             {errors.category.message}
           </p>
         )}
       </div>
-            {/* Price */}
 
-      <div>
-        <label className="mb-2 block font-medium">
-          Price
-        </label>
+      <div className="form-group">
+        <label>Price</label>
 
         <input
           type="number"
-          {...register("price", { valueAsNumber: true })}
-          className="w-full rounded border p-3"
+          {...register("price", {
+            valueAsNumber: true,
+          })}
+          className="form-input"
           placeholder="4800000"
         />
 
         {errors.price && (
-          <p className="mt-1 text-sm text-red-500">
+          <p className="form-error">
             {errors.price.message}
           </p>
         )}
       </div>
 
-      {/* Quantity */}
-
-      <div>
-        <label className="mb-2 block font-medium">
-          Quantity
-        </label>
+      <div className="form-group">
+        <label>Quantity</label>
 
         <input
           type="number"
-          {...register("quantity", { valueAsNumber: true })}
-          className="w-full rounded border p-3"
+          {...register("quantity", {
+            valueAsNumber: true,
+          })}
+          className="form-input"
           placeholder="10"
         />
 
         {errors.quantity && (
-          <p className="mt-1 text-sm text-red-500">
+          <p className="form-error">
             {errors.quantity.message}
           </p>
         )}
       </div>
 
-      {/* Buttons */}
-
-      <div className="flex justify-end gap-3 pt-4">
+      <div className="form-actions">
         <button
           type="button"
           onClick={onClose}
           disabled={loading}
-          className="rounded bg-gray-200 px-5 py-2 font-medium hover:bg-gray-300 disabled:opacity-50"
+          className="cancel-btn"
         >
           Cancel
         </button>
@@ -202,7 +179,7 @@ function VehicleForm({
         <button
           type="submit"
           disabled={loading}
-          className="rounded bg-blue-600 px-5 py-2 font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+          className="submit-btn"
         >
           {loading
             ? mode === "create"

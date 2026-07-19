@@ -1,0 +1,147 @@
+.restock-overlay{
+position:fixed;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(15,23,42,.45);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+z-index:9999;
+padding:20px;
+}
+.restock-modal{
+width:100%;
+max-width:460px;
+background:#fff;
+border-radius:28px;
+padding:34px;
+border:1px solid rgba(226,232,240,.9);
+box-shadow:0 25px 60px rgba(15,23,42,.2);
+animation:restockPopup .25s ease;
+}
+.restock-icon{
+width:72px;
+height:72px;
+margin:0 auto 20px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:22px;
+background:linear-gradient(135deg,#16a34a,#22c55e);
+color:#fff;
+font-size:2rem;
+box-shadow:0 16px 35px rgba(34,197,94,.3);
+}
+.restock-title{
+margin:0;
+font-size:1.8rem;
+font-weight:800;
+text-align:center;
+color:#142b5f;
+}
+.restock-subtitle{
+margin:12px 0 18px;
+text-align:center;
+font-size:.95rem;
+color:#64748b;
+}
+.restock-vehicle{
+padding:16px;
+margin-bottom:24px;
+border-radius:16px;
+background:#f0fdf4;
+border:1px solid #bbf7d0;
+text-align:center;
+font-weight:700;
+color:#16a34a;
+}
+.restock-field{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-bottom:30px;
+}
+.restock-field label{
+font-weight:700;
+color:#334155;
+}
+.restock-input{
+width:100%;
+padding:14px 18px;
+border-radius:14px;
+border:1px solid #dbe4f0;
+background:#f8fbff;
+font-size:1rem;
+outline:none;
+transition:.3s;
+box-sizing:border-box;
+}
+.restock-input:focus{
+border-color:#16a34a;
+background:#fff;
+box-shadow:0 0 0 4px rgba(34,197,94,.12);
+}
+.restock-actions{
+display:flex;
+justify-content:flex-end;
+gap:14px;
+}
+.restock-cancel{
+padding:13px 24px;
+border:none;
+border-radius:14px;
+background:#eef2f7;
+color:#334155;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+}
+.restock-cancel:hover{
+background:#dbe4f0;
+}
+.restock-confirm{
+padding:13px 28px;
+border:none;
+border-radius:14px;
+background:linear-gradient(135deg,#16a34a,#22c55e);
+color:#fff;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 12px 28px rgba(34,197,94,.25);
+}
+.restock-confirm:hover:not(:disabled){
+transform:translateY(-2px);
+box-shadow:0 16px 35px rgba(34,197,94,.35);
+}
+.restock-confirm:disabled{
+opacity:.7;
+cursor:not-allowed;
+}
+@keyframes restockPopup{
+from{
+opacity:0;
+transform:translateY(20px) scale(.95);
+}
+to{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+}
+@media(max-width:600px){
+.restock-modal{
+padding:24px;
+border-radius:22px;
+}
+.restock-title{
+font-size:1.5rem;
+}
+.restock-actions{
+flex-direction:column;
+}
+.restock-cancel,
+.restock-confirm{
+width:100%;
+}
+}

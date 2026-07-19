@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import type { ReactNode } from "react";
+import "./VehicleModal.css";
 
 interface VehicleModalProps {
   open: boolean;
@@ -23,17 +24,29 @@ function VehicleModal({
     <Dialog
       open={open}
       onClose={onClose}
-      className="relative z-50"
+      className="vehicle-modal"
     >
-      <DialogBackdrop className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity" />
+      <DialogBackdrop className="vehicle-backdrop" />
 
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-lg rounded-xl bg-white p-6 shadow-2xl transition-all">
-          <DialogTitle className="mb-6 text-2xl font-bold text-slate-800">
-            {title}
-          </DialogTitle>
+      <div className="vehicle-modal-wrapper">
+        <DialogPanel className="vehicle-modal-panel">
+          <div className="vehicle-modal-header">
+            <DialogTitle className="vehicle-modal-title">
+              {title}
+            </DialogTitle>
 
-          {children}
+            <button
+              type="button"
+              onClick={onClose}
+              className="vehicle-modal-close"
+            >
+              ×
+            </button>
+          </div>
+
+          <div className="vehicle-modal-body">
+            {children}
+          </div>
         </DialogPanel>
       </div>
     </Dialog>
