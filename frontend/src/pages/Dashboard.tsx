@@ -8,7 +8,7 @@ import VehicleFilters from "../components/vehicle/VehicleFilters";
 import PurchaseModal from "../components/vehicle/PurchaseModal";
 import { useVehicles } from "../hooks/useVehicles";
 import { useAuth } from "../context/AuthContext";
-
+import RestockModal from "../components/vehicle/RestockModal";
 import type {
   Vehicle,
   VehiclePayload,
@@ -26,6 +26,7 @@ function Dashboard() {
     editVehicle,
     removeVehicle,
     purchase,
+    restock,
   } = useVehicles();
 
   const [purchaseOpen, setPurchaseOpen] = useState(false);
@@ -35,7 +36,10 @@ function Dashboard() {
   const [mode, setMode] = useState<"create" | "edit">("create");
   const [selectedVehicle, setSelectedVehicle] =
     useState<Vehicle | null>(null);
+  const [restockOpen, setRestockOpen] = useState(false);
 
+  const [restockVehicle, setRestockVehicle] =
+    useState<Vehicle | null>(null);
   const handleAdd = () => {
     setMode("create");
     setSelectedVehicle(null);
@@ -74,7 +78,19 @@ function Dashboard() {
   };
 
   const handleRestock = (vehicle: Vehicle) => {
-    console.log("Restock:", vehicle);
+    setRestockVehicle(vehicle);
+    setRestockOpen(true);
+  };
+
+  const handleRestockConfirm = async (
+    quantity: number
+  ): Promise<boolean> => {
+    if (!restockVehicle) return false;
+
+    return await restock(
+      restockVehicle._id,
+      quantity
+    );
   };
 
   const handleSubmit = async (
@@ -154,6 +170,19 @@ function Dashboard() {
             setPurchaseVehicle(null);
           }}
           onConfirm={handlePurchaseConfirm}
+        />
+        <RestockModal
+          open={restockOpen}
+          vehicleName={
+            restockVehicle
+              ? `${restockVehicle.make} ${restockVehicle.model}`
+              : ""
+          }
+          onClose={() => {
+            setRestockOpen(false);
+            setRestockVehicle(null);
+          }}
+          onConfirm={handleRestockConfirm}
         />
       </main>
     </>
