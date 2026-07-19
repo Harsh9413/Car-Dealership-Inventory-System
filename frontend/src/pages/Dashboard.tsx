@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import './Dashboard.css';
 import Navbar from "../components/layout/Navbar";
 import VehicleTable from "../components/vehicle/VehicleTable";
 import VehicleModal from "../components/vehicle/VehicleModal";
@@ -111,80 +111,89 @@ function Dashboard() {
     <>
       <Navbar />
 
-      <main className="mx-auto max-w-7xl p-6">
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-3xl font-bold">
-            Vehicle Dashboard
-          </h2>
+      <main className="dashboard-page">
+  <div className="dashboard-container">
+    <div className="dashboard-header">
+      <div className="dashboard-title">
+        <h1>Vehicle Dashboard</h1>
+        <p>Manage and monitor your dealership inventory.</p>
+      </div>
 
-          {user?.role === "admin" && (
-            <button
-              onClick={handleAdd}
-              className="rounded bg-green-600 px-5 py-2 text-white transition hover:bg-green-700"
-            >
-              + Add Vehicle
-            </button>
-          )}
-        </div>
-
-        <VehicleFilters
-          onSearch={filterVehicles}
-          onReset={fetchVehicles}
-        />
-
-        <VehicleTable
-          vehicles={vehicles}
-          loading={loading}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onPurchase={handlePurchase}
-          onRestock={handleRestock}
-          isAdmin={user?.role === "admin"}
-        />
-
-        <VehicleModal
-          open={open}
-          title={
-            mode === "create"
-              ? "Add Vehicle"
-              : "Edit Vehicle"
-          }
-          onClose={() => setOpen(false)}
+      {user?.role === "admin" && (
+        <button
+          onClick={handleAdd}
+          className="dashboard-add-btn"
         >
-          <VehicleForm
-            mode={mode}
-            vehicle={selectedVehicle}
-            onSubmit={handleSubmit}
-            onClose={() => setOpen(false)}
-          />
-        </VehicleModal>
-        <PurchaseModal
-          open={purchaseOpen}
-          vehicleName={
-            purchaseVehicle
-              ? `${purchaseVehicle.make} ${purchaseVehicle.model}`
-              : ""
-          }
-          onClose={() => {
-            setPurchaseOpen(false);
-            setPurchaseVehicle(null);
-          }}
-          onConfirm={handlePurchaseConfirm}
-        />
-        <RestockModal
-          open={restockOpen}
-          vehicleName={
-            restockVehicle
-              ? `${restockVehicle.make} ${restockVehicle.model}`
-              : ""
-          }
-          onClose={() => {
-            setRestockOpen(false);
-            setRestockVehicle(null);
-          }}
-          onConfirm={handleRestockConfirm}
-        />
-      </main>
+          + Add Vehicle
+        </button>
+      )}
+    </div>
+
+    <div className="dashboard-card">
+      <VehicleFilters
+        onSearch={filterVehicles}
+        onReset={fetchVehicles}
+      />
+    </div>
+
+    <div className="dashboard-table-card">
+      <VehicleTable
+        vehicles={vehicles}
+        loading={loading}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onPurchase={handlePurchase}
+        onRestock={handleRestock}
+        isAdmin={user?.role === "admin"}
+      />
+    </div>
+
+    <VehicleModal
+      open={open}
+      title={
+        mode === "create"
+          ? "Add Vehicle"
+          : "Edit Vehicle"
+      }
+      onClose={() => setOpen(false)}
+    >
+      <VehicleForm
+        mode={mode}
+        vehicle={selectedVehicle}
+        onSubmit={handleSubmit}
+        onClose={() => setOpen(false)}
+      />
+    </VehicleModal>
+
+    <PurchaseModal
+      open={purchaseOpen}
+      vehicleName={
+        purchaseVehicle
+          ? `${purchaseVehicle.make} ${purchaseVehicle.model}`
+          : ""
+      }
+      onClose={() => {
+        setPurchaseOpen(false);
+        setPurchaseVehicle(null);
+      }}
+      onConfirm={handlePurchaseConfirm}
+    />
+
+    <RestockModal
+      open={restockOpen}
+      vehicleName={
+        restockVehicle
+          ? `${restockVehicle.make} ${restockVehicle.model}`
+          : ""
+      }
+      onClose={() => {
+        setRestockOpen(false);
+        setRestockVehicle(null);
+      }}
+      onConfirm={handleRestockConfirm}
+    />
+  </div>
+</main>
     </>
   );
 }
