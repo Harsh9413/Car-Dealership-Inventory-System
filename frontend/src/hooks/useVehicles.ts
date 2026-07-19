@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-
+import { searchVehicles } from "../api/vehicle.api";
+import type { SearchVehicleParams } from "../api/vehicle.api";
 import {
   getVehicles,
   createVehicle,
@@ -28,7 +29,9 @@ export function useVehicles() {
       setVehicles(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message || "Failed to fetch vehicles");
+        toast.error(
+          error.response?.data?.message ?? "Failed to fetch vehicles"
+        );
       } else {
         toast.error("Something went wrong");
       }
@@ -37,7 +40,9 @@ export function useVehicles() {
     }
   };
 
-  const addVehicle = async (payload: VehiclePayload) => {
+  const addVehicle = async (
+    payload: VehiclePayload
+  ): Promise<boolean> => {
     try {
       const response = await createVehicle(payload);
 
@@ -48,17 +53,21 @@ export function useVehicles() {
       return true;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message || "Failed to create vehicle");
+        toast.error(
+          error.response?.data?.message ?? "Failed to create vehicle"
+        );
+      } else {
+        toast.error("Something went wrong");
       }
 
       return false;
     }
   };
 
- const editVehicle = async (
-  id: string,
-  payload: UpdateVehiclePayload
-) => {
+  const editVehicle = async (
+    id: string,
+    payload: UpdateVehiclePayload
+  ): Promise<boolean> => {
     try {
       const response = await updateVehicle(id, payload);
 
@@ -69,26 +78,63 @@ export function useVehicles() {
       return true;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message || "Failed to update vehicle");
+        toast.error(
+          error.response?.data?.message ?? "Failed to update vehicle"
+        );
+      } else {
+        toast.error("Something went wrong");
       }
 
       return false;
     }
   };
 
-  const removeVehicle = async (id: string) => {
+  const removeVehicle = async (
+    id: string
+  ): Promise<boolean> => {
     try {
       const response = await deleteVehicle(id);
 
       toast.success(response.message);
 
       await fetchVehicles();
+
+      return true;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message || "Failed to delete vehicle");
+        toast.error(
+          error.response?.data?.message ?? "Failed to delete vehicle"
+        );
+      } else {
+        toast.error("Something went wrong");
       }
+
+      return false;
     }
   };
+
+  const filterVehicles = async (
+  filters: SearchVehicleParams
+): Promise<void> => {
+  try {
+    setLoading(true);
+
+    const response = await searchVehicles(filters);
+
+    setVehicles(response.data);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      toast.error(
+        error.response?.data?.message ??
+          "Failed to search vehicles"
+      );
+    } else {
+      toast.error("Something went wrong");
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchVehicles();
@@ -98,6 +144,7 @@ export function useVehicles() {
     vehicles,
     loading,
     fetchVehicles,
+    filterVehicles,
     addVehicle,
     editVehicle,
     removeVehicle,

@@ -26,3 +26,21 @@ export const deleteVehicle = async (id: string) => {
   const response = await api.delete(`/vehicles/${id}`);
   return response.data;
 };
+
+export interface SearchVehicleParams {
+  make?: string;
+  model?: string;
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+}
+
+export const searchVehicles = async (
+  params: SearchVehicleParams
+) => {
+  const response = await api.get("/vehicles/search", {
+    params,
+  });
+
+  return response.data;
+};
