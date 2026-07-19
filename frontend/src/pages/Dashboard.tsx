@@ -5,7 +5,7 @@ import VehicleTable from "../components/vehicle/VehicleTable";
 import VehicleModal from "../components/vehicle/VehicleModal";
 import VehicleForm from "../components/vehicle/VehicleForm";
 import VehicleFilters from "../components/vehicle/VehicleFilters";
-
+import PurchaseModal from "../components/vehicle/PurchaseModal";
 import { useVehicles } from "../hooks/useVehicles";
 import { useAuth } from "../context/AuthContext";
 
@@ -25,8 +25,12 @@ function Dashboard() {
     addVehicle,
     editVehicle,
     removeVehicle,
+    purchase,
   } = useVehicles();
 
+  const [purchaseOpen, setPurchaseOpen] = useState(false);
+  const [purchaseVehicle, setPurchaseVehicle] =
+    useState<Vehicle | null>(null);
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"create" | "edit">("create");
   const [selectedVehicle, setSelectedVehicle] =
@@ -55,7 +59,18 @@ function Dashboard() {
   };
 
   const handlePurchase = (vehicle: Vehicle) => {
-    console.log("Purchase:", vehicle);
+    setPurchaseVehicle(vehicle);
+    setPurchaseOpen(true);
+  };
+  const handlePurchaseConfirm = async (
+    quantity: number
+  ): Promise<boolean> => {
+    if (!purchaseVehicle) return false;
+
+    return await purchase(
+      purchaseVehicle._id,
+      quantity
+    );
   };
 
   const handleRestock = (vehicle: Vehicle) => {
@@ -127,6 +142,19 @@ function Dashboard() {
             onClose={() => setOpen(false)}
           />
         </VehicleModal>
+        <PurchaseModal
+          open={purchaseOpen}
+          vehicleName={
+            purchaseVehicle
+              ? `${purchaseVehicle.make} ${purchaseVehicle.model}`
+              : ""
+          }
+          onClose={() => {
+            setPurchaseOpen(false);
+            setPurchaseVehicle(null);
+          }}
+          onConfirm={handlePurchaseConfirm}
+        />
       </main>
     </>
   );

@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { searchVehicles } from "../api/vehicle.api";
 import type { SearchVehicleParams } from "../api/vehicle.api";
 import {
   getVehicles,
   createVehicle,
   updateVehicle,
   deleteVehicle,
+  searchVehicles,
+  purchaseVehicle,
+  restockVehicle,
 } from "../api/vehicle.api";
 
 import type {
@@ -89,6 +91,58 @@ export function useVehicles() {
     }
   };
 
+  const purchase = async (
+  id: string,
+  quantity: number
+): Promise<boolean> => {
+  try {
+    const response = await purchaseVehicle(id, quantity);
+
+    toast.success(response.message);
+
+    await fetchVehicles();
+
+    return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      toast.error(
+        error.response?.data?.message ??
+          "Purchase failed"
+      );
+    } else {
+      toast.error("Something went wrong");
+    }
+
+    return false;
+  }
+};
+
+const restock = async (
+  id: string,
+  quantity: number
+): Promise<boolean> => {
+  try {
+    const response = await restockVehicle(id, quantity);
+
+    toast.success(response.message);
+
+    await fetchVehicles();
+
+    return true;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      toast.error(
+        error.response?.data?.message ??
+          "Restock failed"
+      );
+    } else {
+      toast.error("Something went wrong");
+    }
+
+    return false;
+  }
+};
+
   const removeVehicle = async (
     id: string
   ): Promise<boolean> => {
@@ -141,12 +195,14 @@ export function useVehicles() {
   }, []);
 
   return {
-    vehicles,
-    loading,
-    fetchVehicles,
-    filterVehicles,
-    addVehicle,
-    editVehicle,
-    removeVehicle,
-  };
+  vehicles,
+  loading,
+  fetchVehicles,
+  filterVehicles,
+  addVehicle,
+  editVehicle,
+  removeVehicle,
+  purchase,
+  restock,
+};
 }

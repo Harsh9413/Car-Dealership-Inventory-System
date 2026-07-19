@@ -44,3 +44,30 @@ export const searchVehicles = async (
 
   return response.data;
 };
+export const purchaseVehicle = async (
+  id: string,
+  quantity: number
+) => {
+  const response = await api.post(
+    `/vehicles/${id}/purchase`,
+    {
+      quantity,
+    }
+  );
+
+  return response.data;
+};
+
+export const restockVehicle = async (
+  id: string,
+  quantity: number
+) => {
+  const response = await api.post(
+    `/vehicles/${id}/restock`,
+    {
+      quantity,
+    }
+  );
+
+  return response.data;
+};
